@@ -4210,6 +4210,7 @@ static void dump_table(char *table, char *db)
         {
           total_length+= row_length;
           fputc(',',md_result_file);            /* Always row break */
+          fputc('\n', md_result_file);     /* Lon Binder says wrap that line! */
           fputs(extended_row.str,md_result_file);
         }
         else
