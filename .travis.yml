@@ -1,0 +1,29 @@
+language: cpp
+install:
+  - export $(cat VERSION)
+  - mkdir mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64
+  - cd mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64
+script: cmake ..
+before_deploy:
+  - cd $TRAVIS_BUILD_DIR
+  - tar cfz mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64
+  - echo -e "machine github.com\nlogin $(echo $TRAVIS_REPO_SLUG | cut -d '/' -f 1)\npassword $GITHUB_TOKEN" >> ~/.netrc
+  - git tag -f v$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-$TRAVIS_BRANCH-deploy
+  - git push origin -f v$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-$TRAVIS_BRANCH-deploy
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  skip_cleanup: true
+  file: 
+  - bld/mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz
+  - bld/mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz.asc
+  overwrite: true
+  on:
+    all_branches: true
+branches:
+  except:
+    - /^deploy-.*$/
+    - /^.*-deploy$/
+    - /^untagged-.*$/
+notifications:
+  email: false
