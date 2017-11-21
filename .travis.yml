@@ -17,7 +17,7 @@ deploy:
   api_key: $GITHUB_TOKEN
   skip_cleanup: true
   file: 
-  - bld/mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz
+  - mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz
   overwrite: true
   on:
     all_branches: true
