@@ -18,7 +18,6 @@ deploy:
   skip_cleanup: true
   file: 
   - bld/mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz
-  - bld/mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz.asc
   overwrite: true
   on:
     all_branches: true
