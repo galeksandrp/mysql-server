@@ -3,7 +3,9 @@ install:
   - export $(cat VERSION)
   - mkdir mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64
   - cd mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64
-script: cmake ..
+script: 
+  - cmake ..
+  - make
 before_deploy:
   - cd $TRAVIS_BUILD_DIR
   - tar cfz mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64.tar.gz mysql-$MYSQL_VERSION_MAJOR.$MYSQL_VERSION_MINOR.$MYSQL_VERSION_PATCH-linux2.6-x86_64
