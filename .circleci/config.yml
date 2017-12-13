@@ -16,7 +16,8 @@ jobs:
           working_directory: mysql-5.7.20-linux2.6-x86_64
 
       - run: tar cfz mysql-5.7.20-linux2.6-x86_64.tar.gz mysql-5.7.20-linux2.6-x86_64
-
+      
+      - run: mkdir -p /tmp/artifacts
       - run: cp mysql-5.7.20-linux2.6-x86_64.tar.gz /tmp/artifacts
       - run: cp mysql-5.7.20-linux2.6-x86_64/client/mysqldump /tmp/artifacts
       - store_artifacts:
