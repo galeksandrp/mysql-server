@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: galeksandrp/travistest:docker-build-mysql-server
+    steps:
+      - checkout
+      - run: export $(cat VERSION)
+      - run: mkdir mysql-5.7.20-linux2.6-x86_64
+
+      - run: 
+          command: cmake .. -DDOWNLOAD_BOOST=1 -DWITH_BOOST=~/boost
+          working_directory: mysql-5.7.20-linux2.6-x86_64
+      - run: 
+          command: make
+          working_directory: mysql-5.7.20-linux2.6-x86_64
+
+      - run: tar cfz mysql-5.7.20-linux2.6-x86_64.tar.gz mysql-5.7.20-linux2.6-x86_64
+
+      - run: cp mysql-5.7.20-linux2.6-x86_64.tar.gz /tmp/artifacts
+      - run: cp mysql-5.7.20-linux2.6-x86_64/client/mysqldump /tmp/artifacts
+      - store_artifacts:
+          path: /tmp/artifacts
